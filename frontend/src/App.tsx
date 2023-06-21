@@ -38,15 +38,10 @@ function App() {
   let [messages, setMessages] = useState<Array<MessageDict>>(
     Array.from([
       {
-        text: "Hello! I'm a GPT Code assistant. Ask me to do something for you! Pro tip: you can upload a file and I'll be able to use it.",
+        text: "Hello! I'm the iSolutions GPT Code assistant. Ask me anything!",
         role: "system",
         type: "message",
-      },
-      {
-        text: "If I get stuck just type 'reset' and I'll restart the kernel.",
-        role: "system",
-        type: "message",
-      },
+      }
     ])
   );
   let [waitingForSystem, setWaitingForSystem] = useState<WaitingStates>(

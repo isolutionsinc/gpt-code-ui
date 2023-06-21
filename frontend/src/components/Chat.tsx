@@ -18,8 +18,8 @@ function Message(props: {
   return (
     <div className={"message " + (role == "system" ? "system" : "user")}>
       <div className="avatar-holder">
-        <div className="avatar">
-          {role == "system" ? <VoiceChatIcon /> : <PersonIcon />}
+        <div className="">
+          {role == "system" ? <img src="./assets/isol_logo_ai_transparent.png" alt="Logo" width="48" height="48" style={{ marginRight: '10px' }} /> : <PersonIcon />}
         </div>
       </div>
       <div className="message-body">

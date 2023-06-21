@@ -12,9 +12,12 @@ export default function Sidebar(props: any) {
   return (
     <>
       <div className="sidebar">
-        <div className="logo">
-          <AssistantIcon /> Cherry Lake Demo
+        <div className="logo" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <img src="./assets/isol_logo_ai_transparent.png" alt="Logo" width="180" height="180" style={{ marginBottom: '10px' }} />
+          <span style={{ textAlign: 'center' }}>Cherry Lake Demo</span>
         </div>
+
+
         <div className="settings">
           <div style={{ marginBottom: '8px' }}>
             <label htmlFor="userPersona" style={{ display: 'block' }}>
@@ -24,7 +27,7 @@ export default function Sidebar(props: any) {
               id="userPersona"
               style={{ width: '100%' }}
               value={props.userPersona}
-              onChange={(e)=> props.setUserPersona(e.target.value)}
+              onChange={(e) => props.setUserPersona(e.target.value)}
             />
           </div>
           <div style={{ marginBottom: '8px' }}>
@@ -35,7 +38,7 @@ export default function Sidebar(props: any) {
               id="audiancePersona"
               style={{ width: '100%' }}
               value={props.audiancePersona}
-              onChange={(e)=> props.setAudiancePersona(e.target.value)}
+              onChange={(e) => props.setAudiancePersona(e.target.value)}
             />
           </div>
         </div>
