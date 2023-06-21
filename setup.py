@@ -8,7 +8,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 setup(
     name='gpt_code_ui',
     version='0.42.31',
-    description="An Open Source version of ChatGPT Code Interpreter",
+    description="iSolutions GPT Code Powered Data UI",
     long_description=long_description,
     long_description_content_type='text/markdown',  # This field specifies the format of the `long_description`.
     packages=find_packages(),
@@ -24,6 +24,7 @@ setup(
     entry_points={
         'console_scripts': [
             'gptcode = gpt_code_ui.main:main',
+            'gptstop = gpt_code_ui.main:stop',
         ],
     },
 )

@@ -97,6 +97,18 @@ def main():
         kernel_program_process.join()
 
         print("Processes terminated.")
+def stop():
+        print("Terminating processes...")
+        
+        cleanup_kernel_program()
+        kernel_program_process.terminate()
+
+        webapp_process.terminate()
+
+        webapp_process.join()
+        kernel_program_process.join()
+
+        print("Processes terminated.")
         
 if __name__ == '__main__':
     main()
