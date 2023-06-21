@@ -20,7 +20,7 @@ export default function Sidebar(props: any) {
 
         <div className="settings">
           <div style={{ marginBottom: '8px' }}>
-            <label htmlFor="userPersona" style={{ display: 'block' }}>
+            <label htmlFor="userPersona" style={{ display: 'block' , "color":"white" }}>
               User Persona
             </label>
             <textarea
@@ -31,7 +31,7 @@ export default function Sidebar(props: any) {
             />
           </div>
           <div style={{ marginBottom: '8px' }}>
-            <label htmlFor="audiencePersona" style={{ display: 'block' }}>
+            <label htmlFor="audiencePersona" style={{ display: 'block' , "color":"white"}}>
               Audience Persona
             </label>
             <textarea
