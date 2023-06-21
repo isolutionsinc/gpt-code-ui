@@ -2,7 +2,7 @@ import "./App.css";
 import Input from "./components/Input";
 import Sidebar from "./components/Sidebar";
 import Chat, { WaitingStates } from "./components/Chat";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Config from "./config";
 import { useLocalStorage } from "usehooks-ts";
 
@@ -32,6 +32,9 @@ function App() {
 
   let [openAIKey, setOpenAIKey] = useLocalStorage<string>("OpenAIKey", "");
 
+  let [userPersona, setUserPersona] = useState("");
+  let [audiancePersona, setAudiancePersona] = useState("");
+
   let [messages, setMessages] = useState<Array<MessageDict>>(
     Array.from([
       {
@@ -51,6 +54,11 @@ function App() {
   );
   const chatScrollRef = React.useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    console.log('User Persona:', userPersona);
+    console.log('Audience Persona:', audiancePersona);
+  }, [userPersona, audiancePersona]);
+
   const submitCode = async (code: string) => {
     fetch(`${Config.API_ADDRESS}/api`, {
       method: "POST",
@@ -59,7 +67,7 @@ function App() {
       },
       body: JSON.stringify({ command: code }),
     })
-      .then(() => {})
+      .then(() => { })
       .catch((error) => console.error("Error:", error));
   };
 
@@ -84,7 +92,7 @@ function App() {
         },
         body: JSON.stringify({}),
       })
-        .then(() => {})
+        .then(() => { })
         .catch((error) => console.error("Error:", error));
     }
   };
@@ -110,12 +118,13 @@ function App() {
         },
         body: JSON.stringify({
           prompt: userInput,
-          model: selectedModel,
-          openAIKey: openAIKey,
+          audiancePersona,
+          userPersona
+          // openAIKey: openAIKey,
         }),
       });
 
-      
+
 
       const data = await response.json();
       const code = data.code;
@@ -126,7 +135,7 @@ function App() {
         setWaitingForSystem(WaitingStates.Idle);
         return;
       }
-      
+
       submitCode(code);
       setWaitingForSystem(WaitingStates.RunningCode);
     } catch (error) {
@@ -138,13 +147,13 @@ function App() {
   };
 
   async function getApiData() {
-    if(document.hidden){
+    if (document.hidden) {
       return;
     }
-    
+
     let response = await fetch(`${Config.API_ADDRESS}/api`);
     let data = await response.json();
-    data.results.forEach(function (result: {value: string, type: string}) {
+    data.results.forEach(function (result: { value: string, type: string }) {
       if (result.value.trim().length == 0) {
         return;
       }
@@ -173,7 +182,7 @@ function App() {
         prompt: `File ${filename} was uploaded successfully.`,
       }),
     })
-      .then(() => {})
+      .then(() => { })
       .catch((error) => console.error("Error:", error));
   }
 
@@ -196,18 +205,18 @@ function App() {
   React.useEffect(() => {
     const clickHandler = (event: any) => {
       let element = event.target;
-      
+
       // If an <a> element was found, prevent default action and do something else
       if (element != null && element.tagName === 'A') {
         // Check if href starts with /download
-        
+
         if (element.getAttribute("href").startsWith(`/download`)) {
           event.preventDefault();
 
           // Make request to ${Config.WEB_ADDRESS}/download instead
           // make it by opening a new tab
           window.open(`${Config.WEB_ADDRESS}${element.getAttribute("href")}`);
-        }        
+        }
       }
     };
 
@@ -218,21 +227,17 @@ function App() {
     return () => {
       document.removeEventListener('click', clickHandler);
     };
-  }, []); 
+  }, []);
 
   return (
     <>
       <div className="app">
         <Sidebar
-          models={MODELS}
-          selectedModel={selectedModel}
-          onSelectModel={(val: string) => {
-            setSelectedModel(val);
-          }}
-          openAIKey={openAIKey}
-          setOpenAIKey={(val: string) => {
-            setOpenAIKey(val);
-          }}
+
+          userPersona={userPersona}
+          setUserPersona={setUserPersona}
+          audiancePersona={audiancePersona}
+          setAudiancePersona={setAudiancePersona}
         />
         <div className="main">
           <Chat

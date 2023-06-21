@@ -2,13 +2,7 @@ import AssistantIcon from '@mui/icons-material/Assistant';
 
 import "./Sidebar.css";
 
-export default function Sidebar(props: {
-  models: Array<{ name: string; displayName: string }>;
-  selectedModel: string;
-  onSelectModel: any;
-  setOpenAIKey: any;
-  openAIKey: string;
-}) {
+export default function Sidebar(props: any) {
   const handleOpenAIButtonClick = () => {
     const key = prompt("Please enter your OpenAI key", props.openAIKey);
     if (key != null) {
@@ -19,29 +13,31 @@ export default function Sidebar(props: {
     <>
       <div className="sidebar">
         <div className="logo">
-            <AssistantIcon /> GPT-Code UI
-
-            <div className='github'>
-                <a href='https://github.com/ricklamers/gpt-code-ui'>Open Source - v{import.meta.env.VITE_APP_VERSION}</a>
-            </div>
+          <AssistantIcon /> Cherry Lake Demo
         </div>
         <div className="settings">
-            <label className="header">Settings</label>
-            <label>Model</label>
-            <select
-            value={props.selectedModel}
-            onChange={(event) => props.onSelectModel(event.target.value)}
-            >
-            {props.models.map((model, index) => {
-                return (
-                <option key={index} value={model.name}>
-                    {model.displayName}
-                </option>
-                );
-            })}
-            </select>
-            <label>Credentials</label>
-            <button onClick={handleOpenAIButtonClick}>Set OpenAI key</button>
+          <div style={{ marginBottom: '8px' }}>
+            <label htmlFor="userPersona" style={{ display: 'block' }}>
+              User Persona:
+            </label>
+            <textarea
+              id="userPersona"
+              style={{ width: '100%' }}
+              value={props.userPersona}
+              onChange={(e)=> props.setUserPersona(e.target.value)}
+            />
+          </div>
+          <div style={{ marginBottom: '8px' }}>
+            <label htmlFor="audiencePersona" style={{ display: 'block' }}>
+              Audience Persona:
+            </label>
+            <textarea
+              id="audiancePersona"
+              style={{ width: '100%' }}
+              value={props.audiancePersona}
+              onChange={(e)=> props.setAudiancePersona(e.target.value)}
+            />
+          </div>
         </div>
       </div>
     </>
