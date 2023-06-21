@@ -51,11 +51,6 @@ def print_color(text, color="gray"):
 
 
 def print_banner():
-        
-        print("""
-█▀▀ █▀█ ▀█▀ ▄▄ █▀▀ █▀█ █▀▄ █▀▀
-█▄█ █▀▀ ░█░ ░░ █▄▄ █▄█ █▄▀ ██▄
-        """)
 
         print("> Open GPT-Code UI in your browser %s" % APP_URL)
         print("")
@@ -63,9 +58,6 @@ def print_banner():
         print("")
         print("Find your OpenAI API key at https://platform.openai.com/account/api-keys")
         print("")
-        print_color("I'm looking for exciting MLE opportunities! Find out more https://ricklamers.io/about", color="green")
-        print_color("")
-        print_color("Contribute to GPT-Code UI at https://github.com/ricklamers/gpt-code-ui")   
 
 def main():
     setup_logging()
