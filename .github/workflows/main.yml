@@ -1,0 +1,54 @@
+name: CI
+# Controls when the workflow will run
+on: [push]
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: self-hosted
+    #needs: clean
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Runs code deploy
+        uses: actions/checkout@v2
+      #  with:
+      #    host: ${{ secrets.HOST }}
+      #    username: ${{ secrets.USERNAME }}
+      #    password: ${{ secrets.PASSWORD }}
+      #    port: ${{ secrets.PORT }}
+      #- run: pm2 stop npm
+      #- run: rm -rf ./*
+      #- name: Build npm
+      #  uses: actions/setup-node@v2
+     #   with:
+      #    node-version: "16"    
+      #- run: cd /home/ubuntu/hammercare-api/
+      - run: pwd
+      - run: ls
+      - run: chmod 777 .
+      #- run: NODE_OPTIONS=--max_old_space_size=1024; npm install
+      #- run: npm install
+      #- run: npm ci
+      #- run: npm run build
+      #- run: NODE_OPTIONS=--max_old_space_size=1024; npm run build
+      #- run: npm run start
+      #- run: cp /home/ubuntu/hammercare-api/.env /home/ubuntu/hammercare-api/actions-runner/_work/hammercare-api/hammercare-api/.env
+      # Add this back in after fix 
+      #- run: npm test --if-present
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: |
+      #      ~/.npm
+      #      ${{ github.workspace }}/.next/cache
+          # Generate a new cache whenever packages or source files change.
+      #    key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+        # If source files changed but packages didn't, rebuild from a prior cache.
+      #    restore-keys: |
+      #      ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+      - run: echo ${{ secrets.API_KEY }} > .env
+      - run: pwd
+      - run: ls
+      #- run: npm run start
+      #- run: pm2 restart npm
+      #- run: pm2 start npm -- start
