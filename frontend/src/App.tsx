@@ -38,7 +38,7 @@ function App() {
   let [messages, setMessages] = useState<Array<MessageDict>>(
     Array.from([
       {
-        text: "Hello! I'm the iSolutions GPT Code assistant. Upload a file to get started!",
+        text: "Hello! I'm the iSolutions GPT Data Environment. Upload a file to get started!",
         role: "system",
         type: "message",
       }

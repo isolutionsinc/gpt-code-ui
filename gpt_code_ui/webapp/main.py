@@ -228,8 +228,10 @@ def inject_context():
 def generate_code():
     user_prompt = request.json.get('prompt', '')
     user_openai_key = request.json.get('openAIKey', None)
+    ### HARDCODED MODEL ###
     #model = request.json.get('model', None)
-    model = "gpt-3.5-turbo"
+    #model = "gpt-3.5-turbo"
+    model = "gpt-4"
 
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
