@@ -9,6 +9,19 @@ import sys
 
 from collections import deque
 
+#iSolutions requirements
+import json
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+import matplotlib.pyplot as plt
+import geopandas as gpd
+import dateparser
+#import pypdf2 
+
+
 from flask_cors import CORS
 from flask import Flask, request, jsonify, send_from_directory, Response
 from dotenv import load_dotenv
@@ -76,10 +89,6 @@ async def get_code(user_prompt, user_openai_key=None, model="gpt-3.5-turbo"):
             'dateparser' #dateparser==1.1.8
             'pandas', # matplotlib==1.5.3
             'geopandas' # geopandas==0.13.2
-        For pdf extraction, you can use
-            'PyPDF2', # PyPDF2==3.0.1
-            'pdfminer', # pdfminer==20191125
-            'pdfplumber', # pdfplumber==0.9.0
         For data visualization, you can use
             'matplotlib', # matplotlib==3.7.1
         Be sure to generate charts with matplotlib. If you need geographical charts, use geopandas with the geopandas.datasets module.
@@ -246,6 +255,32 @@ def upload_file():
         return jsonify({'error': 'No selected file'}), 400
     if file and allowed_file(file.filename):
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+        #setting up preprocessing and cleanup
+        #FROM CRIS NOTEBOOK
+        # with open(file, 'r') as f:
+        #     data = json.load(f)
+        # print(file.filename)
+
+        workspace_path = os.path.join(os.getcwd(), 'workspace')
+        file_path = os.path.join(workspace_path, file.filename)
+
+        # with open(file_path, 'r') as f:
+        #     contents = f.read()
+        #     print(contents[0:10])
+
+    
+        with open(file_path, 'r') as f:
+            data = json.load(f)
+        df = pd.json_normalize(data)
+        print(df)           
+        missing_threshold = 0.1
+        variance_threshold = 0.1
+        low_missing_cols = df.columns[df.isnull().mean() < missing_threshold]
+        high_variance_cols = df[low_missing_cols].var().index[df[low_missing_cols].var() > variance_threshold]
+        subset = df[high_variance_cols]
+        print(subset.head())
+        print(subset.describe())
+
         return jsonify({'message': 'File successfully uploaded'}), 200
     else:
         return jsonify({'error': 'File type not allowed'}), 400
