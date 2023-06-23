@@ -84,10 +84,12 @@ async def get_code(user_prompt, user_openai_key=None, model="gpt-3.5-turbo"):
         Then generate valid Python code in a code block 
         Make sure all code is valid - it be run in a Jupyter Python 3 kernel environment. 
         Define every variable before you use it.
-        For data munging, you can use 
+        For data cleaning, you can use 
             'numpy', # numpy==1.24.3
             'dateparser' #dateparser==1.1.8
             'pandas', # matplotlib==1.5.3
+            'importlib', # pandas==1.5.3
+            'xlrd', # pandas==1.5.3
             'geopandas' # geopandas==0.13.2
         For data visualization, you can use
             'matplotlib', # matplotlib==3.7.1
@@ -260,24 +262,25 @@ def upload_file():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
         #setting up preprocessing and cleanup
         #FROM CRIS NOTEBOOK
-        # with open(file, 'r') as f:
-        #     data = json.load(f)
-        # print(file.filename)
 
         workspace_path = os.path.join(os.getcwd(), 'workspace')
         file_path = os.path.join(workspace_path, file.filename)
 
+ 
+        ####ORIGINAL CODE######        
         # with open(file_path, 'r') as f:
-        #     contents = f.read()
-        #     print(contents[0:10])
+        #     data = json.load(f)
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except (UnicodeDecodeError, json.JSONDecodeError, FileNotFoundError):
+            return jsonify({'error': 'Invalid or empty file'}), 400
 
-    
-        with open(file_path, 'r') as f:
-            data = json.load(f)
         df = pd.json_normalize(data)
         print(df)           
         missing_threshold = 0.1
         variance_threshold = 0.1
+        ####ORIGINAL CODE######
         # low_missing_cols = df.columns[df.isnull().mean() < missing_threshold]
         # high_variance_cols = df[low_missing_cols].var().index[df[low_missing_cols].var() > variance_threshold]
         # subset = df[high_variance_cols]
