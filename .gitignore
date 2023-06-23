@@ -5,6 +5,7 @@
 # Program related
 process_pids/
 kernel_connection_file.json
+app.log
 
 # Python stuff
 *.egg-info/
@@ -20,3 +21,8 @@ __pycache__/
 dist/
 build/
 gptcodeui/
+
+#docker
+ERROR*
+*stage-*
+Dockerfile

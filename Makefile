@@ -3,6 +3,8 @@
 # Extract version from setup.py file
 VERSION := $(shell grep -oP "(?<=version=')[^']*" setup.py)
 
+#export VITE_WEB_ADDRESS ?= ""
+
 all: check_env_var build upload_pypi
 
 build: check_env_var compile_frontend bundle_pypi

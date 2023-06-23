@@ -278,8 +278,18 @@ def upload_file():
         print(df)           
         missing_threshold = 0.1
         variance_threshold = 0.1
-        low_missing_cols = df.columns[df.isnull().mean() < missing_threshold]
+        # low_missing_cols = df.columns[df.isnull().mean() < missing_threshold]
+        # high_variance_cols = df[low_missing_cols].var().index[df[low_missing_cols].var() > variance_threshold]
+        # subset = df[high_variance_cols]
+        # Select only columns with numerical data
+        numerical_cols = df.select_dtypes(include=[np.number]).columns
+
+        # Select columns with low missing values
+        low_missing_cols = df[numerical_cols].columns[df[numerical_cols].isnull().mean() < missing_threshold]
+
+        # Select columns with high variance
         high_variance_cols = df[low_missing_cols].var().index[df[low_missing_cols].var() > variance_threshold]
+
         subset = df[high_variance_cols]
         print(subset.head())
         print(subset.describe())
