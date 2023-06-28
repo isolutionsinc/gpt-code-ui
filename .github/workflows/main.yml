@@ -50,7 +50,16 @@ jobs:
       - run: pwd
       - run: ls
       - run: sudo docker build -t isolgpt .
-      - run: sudo docker run -p 8080:8080 isolgpt
+      #- run: sudo docker run -p 8080:8080 isolgpt
+      - name: Checkout 
+        uses: actions/checkout@v2 # Required to mount the Github Workspace to a volume 
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: isolgpt:latest
+          options: -v ${{ github.workspace }}:/work -e ABC=123
+          run: |
+            echo "Running Script"
+            /work/run-script.sh
       #- run: npm run start
       #- run: pm2 restart npm
       #- run: pm2 start npm -- start
