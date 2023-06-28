@@ -49,6 +49,8 @@ jobs:
       - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: pwd
       - run: ls
+      - run: sudo docker build -t isolgpt .
+      - run: sudo docker run -p 8080:8080 isolgpt
       #- run: npm run start
       #- run: pm2 restart npm
       #- run: pm2 start npm -- start
