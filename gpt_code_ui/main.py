@@ -8,6 +8,7 @@ import logging
 import asyncio
 import time
 import webbrowser
+import subprocess
 
 from multiprocessing import Process
 
@@ -97,18 +98,26 @@ def main():
         kernel_program_process.join()
 
         print("Processes terminated.")
+
 def stop():
-        print("Terminating processes...")
-        
-        cleanup_kernel_program()
-        kernel_program_process.terminate()
+    print("Terminating processes...")
 
-        webapp_process.terminate()
+    cleanup_kernel_program()
 
-        webapp_process.join()
-        kernel_program_process.join()
+    kernel_program_command = ["command", "args"]
+    kernel_program_main = subprocess.Popen(kernel_program_command)
 
-        print("Processes terminated.")
+    webapp_command = ["command", "args"]
+    webapp_process = subprocess.Popen(webapp_command)
+
+    kernel_program_main.terminate()
+    webapp_process.terminate()
+
+    webapp_process.join()
+    kernel_program_main.join()
+
+    print("Processes terminated.")
+
         
 if __name__ == '__main__':
     main()

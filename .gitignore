@@ -25,4 +25,3 @@ gptcodeui/
 #docker
 ERROR*
 *stage-*
-Dockerfile

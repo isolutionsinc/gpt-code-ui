@@ -9,8 +9,8 @@ all: check_env_var build upload_pypi
 
 build: check_env_var compile_frontend bundle_pypi
 
-setenv:
-    export VITE_APP_VERSION=${VERSION}
+# setenv:
+#     export VITE_APP_VERSION=${VERSION}
 
 increment_version:
 	@VERSION=$$(grep -oP "(?<=version=')[^']*" setup.py) && \
