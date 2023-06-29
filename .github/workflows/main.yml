@@ -51,6 +51,7 @@ jobs:
       - run: ls
       - run: sudo docker build -t isolgpt .
       #- run: sudo docker run -p 8080:8080 isolgpt
+      - run: sudo usermod -aG docker $USER
       - run: sudo docker stop $(docker ps -a -q) 
       - run: sudo docker image prune
       #- run: npm run start
