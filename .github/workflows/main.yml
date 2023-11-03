@@ -58,4 +58,5 @@ jobs:
       #- run: pm2 restart npm
       #- run: pm2 start npm -- start
       #- name: Run docker image from script
+      - run: whoami
       - run: bash /home/ubuntu/rundocker.sh
